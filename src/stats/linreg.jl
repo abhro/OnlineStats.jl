@@ -6,12 +6,14 @@ Linear regression, optionally with element-wise ridge regularization.
 
 # Example
 
-    x = randn(100, 5)
-    y = x * (1:5) + randn(100)
-    o = fit!(LinReg(), zip(eachrow(x),y))
-    coef(o)
-    coef(o, .1)
-    coef(o, [0,0,0,0,Inf])
+```julia
+x = randn(100, 5)
+y = x * (1:5) + randn(100)
+o = fit!(LinReg(), zip(eachrow(x),y))
+coef(o)
+coef(o, .1)
+coef(o, [0,0,0,0,Inf])
+```
 """
 mutable struct LinReg{W} <: OnlineStat{XY}
     β::Vector{Float64}
@@ -72,12 +74,14 @@ parameter `λ`.  An intercept (`bias`) term is added by default.
 
 # Examples
 
-    x = randn(1000, 10)
-    o = fit!(LinRegBuilder(), eachrow(x))
+```julia
+x = randn(1000, 10)
+o = fit!(LinRegBuilder(), eachrow(x))
 
-    coef(o; y=3, verbose=true)
+coef(o; y=3, verbose=true)
 
-    coef(o; y=7, x=[2,5,4])
+coef(o; y=7, x=[2,5,4])
+```
 """
 mutable struct LinRegBuilder{W} <: OnlineStat{VectorOb{Number}}
     A::Matrix{Float64}  #  x'x, pretend that x = [x, 1]

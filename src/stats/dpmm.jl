@@ -92,21 +92,23 @@ means.
 
 Below is a implementing the prior elicitation procedure described above:
 
-    using Roots
+```julia
+using Roots
 
-    prob_τₖ = 0.8
-    τₖ_max  = 0.5
-    μ₀      = 0.0
-    α₀      = 2.1
-    prob_μₖ = 0.8
-    μₖ_min  = -2
-    μₖ_max  = 2
+prob_τₖ = 0.8
+τₖ_max  = 0.5
+μ₀      = 0.0
+α₀      = 2.1
+prob_μₖ = 0.8
+μₖ_min  = -2
+μₖ_max  = 2
 
-    β₀ = find_zero(β₀ -> cdf(InverseGamma(α₀, β₀), τₖ_max) - prob_τₖ, (1e-4, Inf))
-    λ₀ = find_zero(λ₀ -> begin
-        p_μ = TDist(2*α₀)*sqrt(β₀/(λ₀*α₀)) + μ₀
-        cdf(p_μ, μₖ_max) - cdf(p_μ, μₖ_min) - prob_τₖ
-    end, (1e-4, 1e+2))
+β₀ = find_zero(β₀ -> cdf(InverseGamma(α₀, β₀), τₖ_max) - prob_τₖ, (1e-4, Inf))
+λ₀ = find_zero(λ₀ -> begin
+    p_μ = TDist(2*α₀)*sqrt(β₀/(λ₀*α₀)) + μ₀
+    cdf(p_μ, μₖ_max) - cdf(p_μ, μₖ_min) - prob_τₖ
+end, (1e-4, 1e+2))
+```
 
 `prob_*` sets the amount of density on the desired range. `τₖ_max`, `μₖ_min`,
 `μₖ_max` is the expected range of each parameters. Since we leave `1 - prob_*`
@@ -117,16 +119,19 @@ can be tuned only through trial and error. However, `dirichlet_alpha` is best
 set 0.5 ~ 1e-2 depending on the desired number of components.
 
 # Example
-    n    = 1024
-    μ    = 0.0
-    λ    = 0.1
-    α    = 2.1
-    β    = 0.5
-    α_dp = 1.0
-    o    = DPMM(μ, λ, α, β, α_dp; comp_birth_thres=0.5,
-                comp_death_thres=1e-2, n_comp_max=10) 
-    p = MixtureModel([ Normal(-2.0, 0.5), Normal(3.0, 1.0) ], [0.7, 0.3])
-    o = fit!(o, rand(p, 1000))
+
+```julia
+n    = 1024
+μ    = 0.0
+λ    = 0.1
+α    = 2.1
+β    = 0.5
+α_dp = 1.0
+o    = DPMM(μ, λ, α, β, α_dp; comp_birth_thres=0.5,
+            comp_death_thres=1e-2, n_comp_max=10)
+p = MixtureModel([ Normal(-2.0, 0.5), Normal(3.0, 1.0) ], [0.7, 0.3])
+o = fit!(o, rand(p, 1000))
+```
 """
 mutable struct DPMM{T <: Real} <: OnlineStat{Number}
     n::Int        # Number of observations

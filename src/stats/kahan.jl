@@ -10,7 +10,9 @@ details.
 
 # Example
 
-    fit!(KahanSum(Float64), fill(1, 100))
+```julia
+fit!(KahanSum(Float64), fill(1, 100))
+```
 """
 mutable struct KahanSum{T<:Number} <: OnlineStat{Number}
     sum::T
@@ -66,7 +68,9 @@ issues.
 
 # Example
 
-    @time fit!(KahanMean(), randn(10^6))
+```julia
+@time fit!(KahanMean(), randn(10^6))
+```
 """
 mutable struct KahanMean{W, T<:Number} <: OnlineStat{Number}
     μ::T
