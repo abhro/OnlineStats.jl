@@ -36,7 +36,7 @@ Online univariate dirichlet process Gaussian mixture model algorithm.
 # Mathematical Description
 
 The model is described as
-    
+
     G ~ DP(dirchlet_alpha, Normal-Gamma)
     (μₖ, τₖ) ~ G
     x ~ N(μ, 1/sqrt(τ))
@@ -51,7 +51,7 @@ The variational distribution is the mean-field family defined as
     q(μₖ | τₖ; mₖ, lₖ) q(τₖ; aₖ, bₖ) = N(μₖ; mₖ, 1/(lₖ*τₖ)) Gamma(τₖ; aₖ, 1/bₖ).
 
 Since the model is nonparametric, mixture components are added depending on the
-birth threshold `comp_birth_thres` (higher means less frequen births) and 
+birth threshold `comp_birth_thres` (higher means less frequen births) and
 existing components are pruned depending on the death threshold `comp_death_thres`.
 
 # Hyperparameters
@@ -59,8 +59,8 @@ existing components are pruned depending on the death threshold `comp_death_thre
 DPMMs tend to be very sensitive to its hyperparameters. Therefore, it is important
 to monitor the fitted result and tweak the hyperparameters accordingly. Here
 are the implications of each hyperparameter:
-    
-- `comp_mu`: Prior mean of the components 
+
+- `comp_mu`: Prior mean of the components
 - `comp_lambda`: Prior precision of the components. This affects the dispersion
                  of the components relative to the scale of each component.
                  (Smaller the more dispersed.) (`comp_lambda` > 0)
@@ -235,7 +235,7 @@ end
 """
     sethyperparams!(o::DPMM; )
 
-Reset the hyperparameters of an existing DPMM object. The state of the DPMM is 
+Reset the hyperparameters of an existing DPMM object. The state of the DPMM is
 kept unchanged.
 """
 
