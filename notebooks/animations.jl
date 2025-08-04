@@ -20,10 +20,10 @@ n = 100
 nframes = 100
 
 # ╔═╡ efb59472-8b03-11eb-17b7-d3c7960eb49f
-begin 
+begin
 	o = HeatMap(-5:.2:5, 0:.2:10)
-	
-	anim = @animate for i in 1:nframes 
+
+	anim = @animate for i in 1:nframes
 		x = randn(5i)
 		y = randexp(5i)
 		fit!(o, zip(x,y))

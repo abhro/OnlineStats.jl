@@ -37,13 +37,13 @@ rows = CSV.Rows(file, reusebuffer=true)
 # ╔═╡ 139bc94e-8b0e-11eb-1e52-f92dd6285603
 begin
 	o = GroupBy(String, Hist(0.0:100))
-	
+
 	itr = (row.passenger_count => parse(Float64, row.fare_amount) for row in rows)
-	
+
 	t = @elapsed fit!(o, itr)
-	
+
 	sort!(o)
-	
+
 	md"Seconds Elapsed: $(round(t, digits=2))"
 end
 
